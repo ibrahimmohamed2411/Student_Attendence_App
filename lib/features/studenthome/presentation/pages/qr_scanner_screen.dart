@@ -61,11 +61,11 @@ class _QrScannerScreen extends State<QrScannerScreen> {
   }
 
   Widget buildResult() {
-    return BlocBuilder<QrCubit, QrState>(
+    return BlocBuilder<QrCubit, QrScanState>(
       builder: (context, state) {
-        if (state is Loading) {
+        if (state is BarcodeLoadingState) {
           return CircularProgressIndicator();
-        } else if (state is Error) {
+        } else if (state is BarcodeErrorState) {
           return Text(
             state.msg,
             style: TextStyle(
@@ -73,7 +73,7 @@ class _QrScannerScreen extends State<QrScannerScreen> {
               color: Colors.red,
             ),
           );
-        } else if (state is Success) {
+        } else if (state is BarcodeSuccessState) {
           return Text(
             'success',
             maxLines: 3,
@@ -90,13 +90,7 @@ class _QrScannerScreen extends State<QrScannerScreen> {
 
   void onQRViewCreated(QRViewController controller) {
     this.controller = controller;
-    // setState(() {
-    //
-    // });
     controller.scannedDataStream.listen((barcode) {
-      // setState(() {
-      //   this.barcode = barcode;
-      // });
       controller.pauseCamera();
       BlocProvider.of<QrCubit>(context).recordStudent(barcode);
     });

@@ -1,31 +1,45 @@
 import 'package:student_attendance/features/studenthome/domain/entities/student_attendance.dart';
 
-class StudentAttendenceModel extends StudentAttendance {
-  StudentAttendenceModel(
+class StudentAttendanceModel extends StudentAttendance {
+  StudentAttendanceModel copyWith(
+      {String? name,
+      String? imageUrl,
+      int? numberOfAttendanceLec,
+      DateTime? lastLecDate}) {
+    return StudentAttendanceModel(
+      name: name ?? this.name,
+      imageUrl: imageUrl ?? this.imageUrl,
+      numberOfAttendanceLec:
+          numberOfAttendanceLec ?? this.numberOfAttendanceLec,
+      lastLecDate: lastLecDate ?? this.lastLecDate,
+    );
+  }
+
+  StudentAttendanceModel(
       {required String imageUrl,
       required String name,
       required DateTime lastLecDate,
-      required int numberOfAttendenceLec})
+      required int numberOfAttendanceLec})
       : super(
             imageUrl: imageUrl,
             name: name,
             lastLecDate: lastLecDate,
-            numberOfAttendenceLec: numberOfAttendenceLec);
+            numberOfAttendanceLec: numberOfAttendanceLec);
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'name': name,
       'imageUrl': imageUrl,
       'lastLecDate': lastLecDate.toIso8601String(),
-      'numberOfAttendenceLec': numberOfAttendenceLec,
+      'numberOfAttendanceLec': numberOfAttendanceLec,
     };
   }
 
-  factory StudentAttendenceModel.fromJson(Map<String, dynamic> json) {
-    return StudentAttendenceModel(
+  factory StudentAttendanceModel.fromJson(Map<String, dynamic> json) {
+    return StudentAttendanceModel(
         imageUrl: json['imageUrl'],
         name: json['name'],
         lastLecDate: DateTime.parse(json['lastLecDate']),
-        numberOfAttendenceLec: json['numberOfAttendenceLec']);
+        numberOfAttendanceLec: json['numberOfAttendanceLec']);
   }
 }

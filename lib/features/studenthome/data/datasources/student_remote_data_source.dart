@@ -7,9 +7,9 @@ import '../models/user_data_model.dart';
 
 abstract class StudentRemoteDataSource {
   Future<UserDataModel> getUserData();
-  Future<StudentAttendenceModel?> getStudentAttendenceInfo(String drPath);
-  Future<void> updateStudentAttendence(
-      String drPath, StudentAttendenceModel studentAttendenceModel);
+  Future<StudentAttendanceModel?> getStudentAttendanceInfo(String drPath);
+  Future<void> updateStudentAttendance(
+      String drPath, StudentAttendanceModel studentAttendanceModel);
   Future<void> recordStudentForFirstTime(String path, UserDataModel userData);
 }
 
@@ -27,24 +27,23 @@ class StudentRemoteDataSourceImp implements StudentRemoteDataSource {
     return UserDataModel.fromJson(userData.data()!);
   }
 
-  Future<StudentAttendenceModel?> getStudentAttendenceInfo(
+  Future<StudentAttendanceModel?> getStudentAttendanceInfo(
       String drPath) async {
-    final userAttendenceDoc =
-        await firebaseFirestore //getUserattendanceDocument
-            .collection('attending students')
-            .doc(drPath)
-            .collection('students')
-            .doc(firebaseAuth.currentUser!.uid)
-            .get();
-    if (userAttendenceDoc.data() != null) {
-      return StudentAttendenceModel.fromJson(userAttendenceDoc.data()!);
+    final userAttendanceDoc = await firebaseFirestore
+        .collection('attending students')
+        .doc(drPath)
+        .collection('students')
+        .doc(firebaseAuth.currentUser!.uid)
+        .get();
+    if (userAttendanceDoc.data() != null) {
+      return StudentAttendanceModel.fromJson(userAttendanceDoc.data()!);
     }
     return null;
   }
 
-  Future<void> updateStudentAttendence(
-      String drPath, StudentAttendenceModel studentAttendenceModel) async {
-    final lastLecDate = studentAttendenceModel.lastLecDate;
+  Future<void> updateStudentAttendance(
+      String drPath, StudentAttendanceModel studentAttendanceModel) async {
+    final lastLecDate = studentAttendanceModel.lastLecDate;
     final currentDate = DateTime.now();
     if (currentDate.day == lastLecDate.day &&
         currentDate.month == lastLecDate.month &&
@@ -57,35 +56,30 @@ class StudentRemoteDataSourceImp implements StudentRemoteDataSource {
           .collection('students')
           .doc(firebaseAuth.currentUser!.uid)
           .set(
-        {
-          'numberOfAttendenceLec':
-              studentAttendenceModel.numberOfAttendenceLec + 1,
-          'lastLecDate': DateTime.now().toIso8601String(),
-        },
-        SetOptions(
-          merge: true,
-        ),
-      );
+            studentAttendanceModel
+                .copyWith(
+                  numberOfAttendanceLec:
+                      studentAttendanceModel.numberOfAttendanceLec + 1,
+                  lastLecDate: DateTime.now(),
+                )
+                .toJson(),
+          );
     }
   }
 
   Future<void> recordStudentForFirstTime(
-      String path, UserDataModel userData) async {
-    await firebaseFirestore //recordStudentForFirstLec
+      String drPath, UserDataModel userData) async {
+    final studentAttendanceModel = StudentAttendanceModel(
+      name: userData.name,
+      imageUrl: userData.imageUrl,
+      numberOfAttendanceLec: 1,
+      lastLecDate: DateTime.now(),
+    );
+    await firebaseFirestore
         .collection('attending students')
-        .doc(path)
+        .doc(drPath)
         .collection('students')
         .doc(firebaseAuth.currentUser!.uid)
-        .set(
-      {
-        'numberOfAttendenceLec': 1,
-        'lastLecDate': DateTime.now().toIso8601String(),
-        'name': userData.name,
-        'imageUrl': userData.imageUrl,
-      },
-      SetOptions(
-        merge: true,
-      ),
-    );
+        .set(studentAttendanceModel.toJson());
   }
 }

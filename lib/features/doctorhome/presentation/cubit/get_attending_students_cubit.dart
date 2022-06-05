@@ -7,7 +7,7 @@ import '../../domain/entities/student.dart';
 part 'get_attending_students_state.dart';
 
 class GetAttendingStudentsCubit extends Cubit<GetAttendingStudentsState> {
-  final GetAttendingStudents getAttendingStudents;
+  final GetAttendingStudentsUseCase getAttendingStudents;
   GetAttendingStudentsCubit({required this.getAttendingStudents})
       : super(GetAttendingStudentsInitial());
   Future<void> getAttendance() async {

@@ -18,3 +18,10 @@ class CacheFailure extends Failure {
   @override
   List<Object?> get props => [msg];
 }
+
+class InvalidCodeFailure extends Failure {
+  InvalidCodeFailure(String msg) : super(msg);
+
+  @override
+  List<Object?> get props => [msg];
+}

@@ -1,37 +1,25 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:student_attendance/features/doctorhome/domain/entities/student.dart';
 
 class StudentModel extends Student {
   StudentModel(
       {required String name,
       required String imageUrl,
-      required num numOfAttendenceLectures})
+      required num attendancePercentage})
       : super(
-            name: name,
-            imageUrl: imageUrl,
-            numOfAttendenceLectures: numOfAttendenceLectures);
-
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'imageUrl': imageUrl,
-      'numOfAttendenceLec': numOfAttendenceLectures,
-    };
-  }
+          name: name,
+          imageUrl: imageUrl,
+          attendancePercentage: attendancePercentage,
+        );
 
   factory StudentModel.fromJson(Map<String, dynamic> json) {
     return StudentModel(
       name: json['name'],
       imageUrl: json['imageUrl'],
-      numOfAttendenceLectures: json['numOfAttendenceLec'],
+      attendancePercentage:
+          getAttendancePercentage(json['numberOfAttendanceLec']),
     );
   }
-  factory StudentModel.fromQueryDocumentSnapshot(
-      QueryDocumentSnapshot<Map<String, dynamic>> json) {
-    return StudentModel(
-      name: json['name'],
-      imageUrl: json['imageUrl'],
-      numOfAttendenceLectures: json['numberOfAttendenceLec'],
-    );
+  static num getAttendancePercentage(num numberOfLecturesAttendance) {
+    return (numberOfLecturesAttendance / 10) * 100;
   }
 }

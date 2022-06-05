@@ -5,14 +5,6 @@ class UserDataModel extends UserData {
       {required String imageUrl, required String name, required String email})
       : super(imageUrl: imageUrl, name: name, email: email);
 
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'imageUrl': imageUrl,
-      'email': email,
-    };
-  }
-
   factory UserDataModel.fromJson(Map<String, dynamic> json) {
     return UserDataModel(
       email: json['email'],
@@ -20,12 +12,4 @@ class UserDataModel extends UserData {
       name: json['name'],
     );
   }
-  // factory UserDataModel.fromQueryDocumentSnapshot(
-  //     QueryDocumentSnapshot<Map<String, dynamic>> json) {
-  //   return UserDataModel(
-  //     name: json['name'],
-  //     imageUrl: json['imageUrl'],
-  //     email: json['email'],
-  //   );
-  // }
 }

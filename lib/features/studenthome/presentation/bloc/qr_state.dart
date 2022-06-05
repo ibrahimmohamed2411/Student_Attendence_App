@@ -1,29 +1,29 @@
 part of 'qr_cubit.dart';
 
-abstract class QrState extends Equatable {
-  const QrState();
+abstract class QrScanState extends Equatable {
+  const QrScanState();
 }
 
-class QrInitial extends QrState {
+class QrInitial extends QrScanState {
   @override
   List<Object> get props => [];
 }
 
-class Loading extends QrState {
+class BarcodeLoadingState extends QrScanState {
   @override
   List<Object> get props => [];
 }
 
-class Error extends QrState {
+class BarcodeErrorState extends QrScanState {
   final String msg;
-  Error({required this.msg});
+  BarcodeErrorState({required this.msg});
   @override
   List<Object> get props => [msg];
 }
 
-class Success extends QrState {
+class BarcodeSuccessState extends QrScanState {
   final String msg;
-  Success({required this.msg});
+  BarcodeSuccessState({required this.msg});
   @override
   List<Object> get props => [msg];
 }

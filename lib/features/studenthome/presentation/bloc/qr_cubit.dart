@@ -4,32 +4,32 @@ import 'package:equatable/equatable.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../../../../core/error/failures.dart';
-import '../../domain/usecases/record_student.dart';
+import '../../domain/usecases/record_student_usecase.dart';
 
 part 'qr_state.dart';
 
-class QrCubit extends Cubit<QrState> {
-  final RecordStudent recordStudentUseCase;
+class QrCubit extends Cubit<QrScanState> {
+  final RecordStudentUseCase recordStudentUseCase;
   QrCubit({required this.recordStudentUseCase}) : super(QrInitial());
   Future<void> recordStudent(Barcode barcode) async {
-    // print(barcode.code);
-    final successOrFailure = checkBarCode(barcode.code!);
-    successOrFailure.fold((l) => emit(Error(msg: l.msg)), (r) async {
-      emit(Loading());
+    final successOrFailure = validateBarcode(barcode.code!);
+    successOrFailure.fold(
+        (failure) => emit(BarcodeErrorState(msg: failure.msg)), (_) async {
+      emit(BarcodeLoadingState());
       final s = await recordStudentUseCase(Params(barcode: barcode));
       emit(
         s.fold(
-          (l) => Error(msg: l.msg),
-          (r) => Success(msg: 'success'),
+          (failure) => BarcodeErrorState(msg: failure.msg),
+          (_) => BarcodeSuccessState(msg: 'Success'),
         ),
       );
     });
   }
 }
 
-Either<Failure, Success> checkBarCode(String code) {
+Either<Failure, Unit> validateBarcode(String code) {
   if (code.contains('/') || code.contains('.')) {
-    return Left(CacheFailure('Invalid barcode'));
+    return Left(InvalidCodeFailure('Invalid barcode'));
   }
-  return Right(Success(msg: 'success'));
+  return Right(unit);
 }

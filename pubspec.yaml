@@ -59,6 +59,8 @@ dependencies:
 
   firebase_storage: ^10.2.14
   image_picker: ^0.8.5
+  fluttertoast: ^8.0.9
+
 
 
 dev_dependencies:

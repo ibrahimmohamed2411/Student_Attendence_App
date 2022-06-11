@@ -38,6 +38,7 @@ class AuthenticationRepositoryImp implements AuthenticationRepository {
         name: params.name,
         email: params.email,
         image: params.image,
+        password: params.password,
       );
       return Right(unit);
     } on FirebaseAuthException catch (e) {

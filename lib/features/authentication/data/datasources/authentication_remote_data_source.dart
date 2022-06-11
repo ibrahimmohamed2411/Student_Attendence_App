@@ -15,6 +15,7 @@ abstract class AuthenticationRemoteDataSource {
     required String role,
     required String name,
     required String email,
+    required String password,
   });
   Stream<DocumentSnapshot> userRoleChanges();
 }
@@ -47,12 +48,14 @@ class AuthenticationRemoteDataSourceImp
   }
 
   @override
-  Future<Unit> uploadUserData(
-      {required String gender,
-      required File image,
-      required String role,
-      required String name,
-      required String email}) async {
+  Future<Unit> uploadUserData({
+    required String gender,
+    required File image,
+    required String role,
+    required String name,
+    required String email,
+    required String password,
+  }) async {
     Reference reference = await firebaseStorage
         .ref()
         .child('userImages')
@@ -69,6 +72,7 @@ class AuthenticationRemoteDataSourceImp
         'role': role,
         'name': name,
         'email': email,
+        'password': password,
       },
     );
     return Future.value(unit);

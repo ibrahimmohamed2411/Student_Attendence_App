@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:student_attendance/core/utils/message_manager.dart';
 import 'package:student_attendance/features/studenthome/presentation/bloc/qr_cubit.dart';
+
+import '../../../../injector_container.dart';
 
 class QrScannerScreen extends StatefulWidget {
   const QrScannerScreen({Key? key}) : super(key: key);
@@ -39,7 +42,7 @@ class _QrScannerScreen extends State<QrScannerScreen> {
           alignment: Alignment.center,
           children: [
             buildQrView(context),
-            Positioned(bottom: 10, child: buildResult()),
+            buildResult(),
           ],
         ),
       ),
@@ -61,27 +64,18 @@ class _QrScannerScreen extends State<QrScannerScreen> {
   }
 
   Widget buildResult() {
-    return BlocBuilder<QrCubit, QrScanState>(
+    return BlocConsumer<QrCubit, QrScanState>(
+      buildWhen: (previous, current) => previous != current,
+      listener: (context, state) {
+        if (state is BarcodeErrorState) {
+          sl<MessageManager>().showToastErrorMessage(msg: state.msg);
+        } else if (state is BarcodeSuccessState) {
+          sl<MessageManager>().showToastSuccessMessage(msg: state.msg);
+        }
+      },
       builder: (context, state) {
         if (state is BarcodeLoadingState) {
           return CircularProgressIndicator();
-        } else if (state is BarcodeErrorState) {
-          return Text(
-            state.msg,
-            style: TextStyle(
-              fontSize: 30,
-              color: Colors.red,
-            ),
-          );
-        } else if (state is BarcodeSuccessState) {
-          return Text(
-            'success',
-            maxLines: 3,
-            style: TextStyle(
-              fontSize: 30,
-              color: Colors.red,
-            ),
-          );
         }
         return SizedBox();
       },

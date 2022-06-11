@@ -1,4 +1,4 @@
-import 'package:student_attendance/features/studenthome/domain/entities/user_data.dart';
+import 'package:student_attendance/core/entities/user_data.dart';
 
 class UserDataModel extends UserData {
   UserDataModel(

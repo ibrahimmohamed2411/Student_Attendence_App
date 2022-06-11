@@ -69,7 +69,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 InkWell(
                   onTap: () {
-                    customModalBottomSheet(context);
+                    signUpModalBottomSheet(context: context);
                   },
                   child: BlocBuilder<ImagePickerCubit, File?>(
                     builder: (context, state) {

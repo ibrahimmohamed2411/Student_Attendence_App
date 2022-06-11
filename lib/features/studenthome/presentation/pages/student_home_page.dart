@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:student_attendance/core/routes/app_router.dart';
+
+import '../../../../core/widgets/custom_drawer.dart';
 
 class StudentHomePage extends StatefulWidget {
   const StudentHomePage({Key? key}) : super(key: key);
@@ -13,16 +14,9 @@ class _StudentHomePageState extends State<StudentHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CustomDrawer(),
       appBar: AppBar(
         title: Text('Student Home Screen'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-            },
-            icon: Icon(Icons.logout),
-          ),
-        ],
       ),
       body: Center(
         child: Column(

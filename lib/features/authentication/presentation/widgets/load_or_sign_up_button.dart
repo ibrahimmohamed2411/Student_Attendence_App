@@ -16,7 +16,14 @@ class LoadOrSignUpButton extends StatelessWidget {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
         if (state is SignUpLoadingState) {
-          return CircularProgressIndicator();
+          return Text(
+            'Please Wait...',
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+            ),
+          );
         }
         return CustomOutlinedButton(
           onPressed: onPressed,

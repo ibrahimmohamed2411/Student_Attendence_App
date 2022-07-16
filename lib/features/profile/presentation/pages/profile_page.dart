@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:student_attendance/core/presentation/widgets/custom_outlined_button.dart';
+import 'package:student_attendance/core/presentation/widgets/password_form_field.dart';
 import 'package:student_attendance/features/authentication/presentation/widgets/modal_buttom_sheet.dart';
 import 'package:student_attendance/features/profile/presentation/bloc/update_profile_bloc.dart';
 import 'package:student_attendance/features/profile/presentation/cubit/profile_cubit.dart';
@@ -53,11 +55,16 @@ class _ProfilePageState extends State<ProfilePage> {
                               profileModalBottomSheet(context: context);
                             },
                             child: ClipOval(
-                              child: Image.network(
-                                state!,
-                                width: 150,
+                              child: FadeInImage(
                                 height: 150,
+                                width: 150,
                                 fit: BoxFit.cover,
+                                image: NetworkImage(
+                                  state!,
+                                ),
+                                placeholder: AssetImage(
+                                  'assets/images/loading.gif',
+                                ),
                               ),
                             ),
                           );
@@ -86,11 +93,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       SizedBox(
                         height: 25,
                       ),
-                      CustomTextField(
-                        labelText: 'Password',
+                      PasswordFormField(
                         controller: passwordController,
                         validator: passwordValidator,
-                        obscureText: true,
                       ),
                       SizedBox(
                         height: 40,
@@ -110,14 +115,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           if (state is UserProfileUpdateLoadingState) {
                             return Center(child: CircularProgressIndicator());
                           }
-                          return OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              primary: Colors.blue,
-                              padding: EdgeInsets.all(10),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
+                          return CustomOutlinedButton(
+                            label: 'Update Profile',
                             onPressed: () {
                               BlocProvider.of<UpdateProfileBloc>(context).add(
                                 UpdateUserProfileEvent(
@@ -128,12 +127,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               );
                             },
-                            child: Text(
-                              'Update Profile',
-                              style: TextStyle(
-                                fontSize: 25,
-                              ),
-                            ),
                           );
                         },
                       ),

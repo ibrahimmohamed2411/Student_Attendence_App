@@ -16,7 +16,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(
-        title: Text('Student Home Screen'),
+        title: Text('Home Screen'),
       ),
       body: Center(
         child: Column(

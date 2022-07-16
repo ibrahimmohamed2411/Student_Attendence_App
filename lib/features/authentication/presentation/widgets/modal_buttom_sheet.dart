@@ -12,14 +12,13 @@ Future<dynamic> signUpModalBottomSheet({
     context: context,
     builder: (_) => Container(
       padding: EdgeInsets.all(10),
-      height: 180,
+      height: 150,
       child: Row(
         children: [
           Expanded(
             child: InkWell(
               onTap: () {
                 Navigator.of(context).pop();
-
                 BlocProvider.of<ImagePickerCubit>(context)
                     .pickUserImage(ImageSource.camera);
               },
@@ -28,11 +27,11 @@ Future<dynamic> signUpModalBottomSheet({
                 child: Column(
                   children: [
                     Icon(Icons.camera_alt,
-                        color: Theme.of(context).primaryColor, size: 100),
+                        color: Theme.of(context).primaryColor, size: 80),
                     Text(
                       'From Camera',
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                       ),
                     ),
                   ],
@@ -41,13 +40,12 @@ Future<dynamic> signUpModalBottomSheet({
             ),
           ),
           SizedBox(
-            width: 5,
+            width: 10,
           ),
           Expanded(
             child: InkWell(
               onTap: () {
                 Navigator.of(context).pop();
-
                 BlocProvider.of<ImagePickerCubit>(context)
                     .pickUserImage(ImageSource.gallery);
               },
@@ -55,12 +53,15 @@ Future<dynamic> signUpModalBottomSheet({
                 color: Colors.grey[100],
                 child: Column(
                   children: [
-                    Icon(Icons.photo_camera_back,
-                        color: Theme.of(context).primaryColor, size: 100),
+                    Icon(
+                      Icons.photo_camera_back,
+                      color: Theme.of(context).primaryColor,
+                      size: 80,
+                    ),
                     Text(
                       'From Gallery',
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                       ),
                     ),
                   ],

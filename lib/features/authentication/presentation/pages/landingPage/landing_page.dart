@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../../../../core/enums/role.dart';
 import '../../../../../injector_container.dart';
@@ -32,10 +33,11 @@ class LandingPage extends StatelessWidget {
                   }
                 }
               }
-              //ToDo:must be a screen loading.. we should use this package to do that
+
               return Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
+                body: SpinKitRotatingCircle(
+                  color: Colors.white,
+                  size: 50.0,
                 ),
               );
             },

@@ -11,31 +11,19 @@ class CustomOutlinedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              backgroundColor: Colors.blueAccent,
-              elevation: 5,
-              padding: EdgeInsets.all(15),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              ),
-            ),
-            onPressed: onPressed,
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-              ),
-            ),
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 50,
+      child: OutlinedButton(
+        onPressed: onPressed,
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.black,
           ),
         ),
-      ],
+      ),
     );
   }
 }

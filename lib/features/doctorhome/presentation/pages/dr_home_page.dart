@@ -15,7 +15,7 @@ class _DrHomePageState extends State<DrHomePage> {
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(
-        title: Text('Dr home screen'),
+        title: Text('Home Screen'),
       ),
       body: SafeArea(
         child: Center(

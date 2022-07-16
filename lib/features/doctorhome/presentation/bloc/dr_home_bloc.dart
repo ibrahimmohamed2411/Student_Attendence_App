@@ -25,6 +25,7 @@ class DrHomeBloc extends Bloc<DrHomeEvent, DrHomeState> {
     });
     on<GetAttendingStudentsEvent>((event, emit) async {
       emit(AttendingStudentsLoadingState());
+
       final failureOrAttendingStudents = await getAttendingStudents(NoParams());
       emit(
         failureOrAttendingStudents.fold(

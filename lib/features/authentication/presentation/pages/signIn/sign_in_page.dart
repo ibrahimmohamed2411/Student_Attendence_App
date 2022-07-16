@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_attendance/core/presentation/util/validators.dart';
 import 'package:student_attendance/core/presentation/widgets/custom_text_field.dart';
+import 'package:student_attendance/core/presentation/widgets/password_form_field.dart';
 import 'package:student_attendance/core/routes/app_router.dart';
 import 'package:student_attendance/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:student_attendance/features/authentication/presentation/widgets/loading_or_build_sign_in_button.dart';
@@ -25,13 +26,14 @@ class _SignInPageState extends State<SignInPage> {
       appBar: AppBar(
         title: Text('Sign in'),
       ),
-      body: Container(
-        padding: EdgeInsets.all(20),
-        margin: EdgeInsets.fromLTRB(0, 90, 0, 30),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          margin: EdgeInsets.fromLTRB(0, 160, 0, 30),
           child: Form(
             key: _fromKey,
             child: Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 BlocListener<AuthenticationBloc, AuthenticationState>(
                   listener: (context, state) {
@@ -42,9 +44,7 @@ class _SignInPageState extends State<SignInPage> {
                         animType: AnimType.BOTTOMSLIDE,
                         title: 'Failed',
                         desc: state.msg,
-                        btnOkOnPress: () {
-                          // Navigator.of(context).pop();
-                        },
+                        btnOkOnPress: () {},
                       )..show();
                     }
                   },
@@ -53,13 +53,14 @@ class _SignInPageState extends State<SignInPage> {
                 CustomTextField(
                   labelText: 'Email',
                   validator: emailValidator,
+                  textInputType: TextInputType.emailAddress,
                   controller: emailController,
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                CustomTextField(
-                  labelText: 'Password',
+                PasswordFormField(
+                  //  label: 'Password',
                   validator: passwordValidator,
                   controller: passwordController,
                 ),
@@ -100,7 +101,6 @@ class _SignInPageState extends State<SignInPage> {
                         'Sign Up',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                     ),

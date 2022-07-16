@@ -13,7 +13,13 @@ class LoadingOrBuildSignInButton extends StatelessWidget {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
         if (state is SignInLoadingState) {
-          return CircularProgressIndicator();
+          return Text(
+            'Signing In...',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          );
         }
         return CustomOutlinedButton(
           onPressed: onPressed,

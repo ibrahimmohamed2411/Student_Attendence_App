@@ -4,6 +4,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_attendance/core/presentation/util/validators.dart';
+import 'package:student_attendance/core/presentation/widgets/password_form_field.dart';
 import 'package:student_attendance/features/authentication/presentation/bloc/authentication_bloc.dart';
 
 import '../../../../../core/enums/gender.dart';
@@ -112,11 +113,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 SizedBox(
                   height: 20,
                 ),
-                CustomTextField(
-                  labelText: 'Password',
+                PasswordFormField(
                   controller: passwordController,
                   validator: passwordValidator,
-                  obscureText: true,
                 ),
                 _buildGenderWidget(),
                 _buildRoleWidget(),

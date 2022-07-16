@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:student_attendance/config/themes/app_theme.dart';
 import 'package:student_attendance/core/routes/app_router.dart';
 import 'package:student_attendance/features/settings/presentation/bloc/theme/theme_cubit.dart';
